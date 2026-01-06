@@ -28,24 +28,45 @@ Do NOT activate when:
 
 ## Execution Workflow
 
-### Step 1: Determine Mode
+### Step 1: Determine Mode (MANDATORY)
 
 Ask once:
 > "Discovery mode: **lite** (3 artifacts, fast) or **full** (7 artifacts, rigorous)?"
 >
-> - Lite: Small projects, < 5 people, low risk
-> - Full: Enterprise, compliance, security-critical, high risk
+> - Lite: Small projects, < 5 people, low risk [15-30 min]
+> - Full: Enterprise, compliance, security-critical, high risk [1-2 hours]
 
-Default to lite if no answer.
+If user says "just start" or doesn't respond: infer from project context:
+- Personal/startup/prototype → lite
+- Enterprise/finance/healthcare/security → full (with confirmation)
+
+**CRITICAL:** Never proceed without mode selection.
 
 **Batch mode (default):** Zero questions, mark unknowns as `[ASSUMPTION]`
 **Interactive mode:** Ask at critical gates only
 
-### Step 2: Create Output Directory
+### Step 1.5: Check Automation
 
 ```bash
-mkdir -p /docs/discovery/$(date +%Y-%m-%d)-<topic-slug>
-cd /docs/discovery/$(date +%Y-%m-%d)-<topic-slug>
+python3 -c "import jsonschema, yaml; print('✅ Automation available')" 2>&1
+```
+
+If available: use scripts for extraction, validation, handoff generation.
+
+### Step 2: Determine Output Directory
+
+**Target:** `<project-root>/docs/discovery/$(date +%Y-%m-%d)-<topic-slug>`
+
+**Fallback strategy if target inaccessible:**
+1. Try `$HOME/docs/discovery/...`
+2. Try `/tmp/discovery-pack/...` with warning
+3. Output as markdown code blocks
+
+**Always inform user of final path.**
+
+```bash
+mkdir -p <determined-output-directory>
+cd <determined-output-directory>
 ```
 
 ### Step 3: Execute Discovery Sequence
@@ -112,7 +133,7 @@ Use consistently across all artifacts:
 
 ## Templates
 
-All artifact templates are in `assets/` directory:
+All artifact templates are in `../templates/` directory:
 - `00_problem-frame.md`
 - `01_constraints-nfr.md`
 - `02_domain-model.md`

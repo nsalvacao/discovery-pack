@@ -4,8 +4,11 @@ description: Complete project discovery workflow using Jobs-to-be-Done, Amazon P
 license: MIT
 metadata:
   author: nsalvacao
-  version: "1.0.0"
+  version: "1.1.0"
   requires: "Python 3.8+ for optional automation scripts"
+  changelog:
+    - "1.1.0: Enhanced mode selection enforcement, output directory fallback strategy, automation workflow, validation checkpoint"
+    - "1.0.0: Initial release"
 ---
 
 # Discovery Pack Workflow
@@ -85,16 +88,53 @@ Generate 7 artifacts for enterprise, compliance-critical, security-sensitive pro
 
 ## Execution Workflow
 
-### Step 1: Determine Mode
+### Step 1: Determine Mode (MANDATORY)
 
-Ask the user once: "Discovery mode: lite (3 artifacts) or full (7 artifacts)?"
+**ALWAYS ask this question first, before any artifact generation:**
 
-Default to **lite** if user is unsure or for small projects.
+> **Discovery mode selection:**
+> - **lite** (3 artifacts): Small projects, < 5 people, low risk, personal/startup [15-30 min]
+> - **full** (7 artifacts): Enterprise, compliance, security-critical, high risk [1-2 hours]
+>
+> **Your choice:** lite | full | (auto-detect from project context)
 
-### Step 2: Create Output Directory
+If user says "just start" or doesn't respond: infer from project context:
+- Personal/startup/prototype → lite
+- Enterprise/finance/healthcare/security → full (with confirmation)
+
+**CRITICAL:** Never proceed to Step 2 without mode selection.
+
+### Step 1.5: Check Automation Availability
+
+Run these checks once per session:
 
 ```bash
-mkdir -p docs/discovery/$(date +%Y-%m-%d)-<project-slug>
+# Check Python + dependencies
+python3 -c "import jsonschema, yaml; print('✅ Automation available')" 2>&1
+```
+
+**If automation available:**
+- Inform user: "Automation scripts available (30-40% token savings). Using enhanced workflow."
+- Use `extract_assumptions.py`, `generate_handoff.py`, `validate.py` where applicable
+
+**If automation unavailable:**
+- Proceed manually (current behavior)
+- Optionally suggest: `pip install -r ~/.copilot/skills/discovery-pack/scripts/requirements.txt`
+
+### Step 2: Determine Output Directory
+
+**Target:** `<project-root>/docs/discovery/$(date +%Y-%m-%d)-<topic-slug>`
+
+**Fallback strategy if target inaccessible:**
+1. Try `$HOME/docs/discovery/...` (user home directory)
+2. If still blocked, try `/tmp/discovery-pack/...` AND warn user:
+   ⚠️ "Artifacts in /tmp (temporary). Copy to project after generation."
+3. If all fail, output as markdown code blocks for manual save
+
+**Always inform user of final path before generation.**
+
+```bash
+mkdir -p <determined-output-directory>
 ```
 
 All artifacts go into this timestamped directory.
@@ -143,7 +183,7 @@ Each template contains:
 - **YAML frontmatter** with structured data (validates against schemas in `schemas/`)
 - **Markdown body** with section prompts
 
-Read the template, fill sections based on conversation, maintain structure.
+Read the template from `templates/` directory, fill sections based on conversation, maintain structure.
 
 ### Step 6: Batch vs Interactive Execution
 
@@ -159,6 +199,35 @@ Read the template, fill sections based on conversation, maintain structure.
   3. Validation plan lacks quantitative metrics (need measurement definition)
 
 For all other unknowns, make reasonable assumptions and tag them.
+
+### Step 7: Validation & Handoff
+
+**If automation available:**
+```bash
+python3 ~/.copilot/skills/discovery-pack/scripts/validate.py <output-dir>
+```
+
+**If validation fails:**
+- Show errors with artifact + line number
+- Offer to fix automatically (if simple) or guide manual fix
+- Re-validate after fix
+
+**If validation passes or unavailable:**
+- Generate handoff summary:
+
+```
+✅ Discovery complete!
+
+Artifacts: <output-dir>
+  [List files with sizes and validation status]
+
+Next steps:
+1. Review 07_speckit-handoff.md
+2. Copy Constitution section → /speckit.constitution
+3. Copy Specify section → /speckit.specify
+
+[If automation used] Token efficiency: ~35% savings via automation
+```
 
 ## Artifact Structure
 

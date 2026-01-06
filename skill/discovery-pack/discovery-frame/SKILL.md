@@ -9,7 +9,7 @@ Generate structured problem frame using JTBD methodology and create `00_problem-
 
 ## Execution
 
-1. Read template from `assets/00_problem-frame.md`
+1. Read template from `../templates/00_problem-frame.md`
 2. Fill template sections based on user input and conversation context
 3. Mark each statement with appropriate tag:
    - `[FACT]` - Verified data

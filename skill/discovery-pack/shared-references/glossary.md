@@ -95,9 +95,9 @@
 - All artifacts reference `common.schema.json`
 - Enables DRY (Don't Repeat Yourself)
 
-**Symlink**
-- Symbolic link from skill to templates
-- Each skill has `assets/` → `../templates`
+**Template Path**
+- Templates located in `../templates/` directory
+- Each sub-skill references templates from parent directory
 - Avoids template duplication
 
 **Batch Mode**
