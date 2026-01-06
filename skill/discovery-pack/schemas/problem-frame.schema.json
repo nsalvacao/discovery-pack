@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Problem Frame Schema",
+  "type": "object",
+  "required": ["project", "date", "status", "problem_statement", "users", "success_metrics"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "project": {"type": "string", "minLength": 1},
+    "date": {"type": "string", "format": "date"},
+    "status": {"$ref": "common.schema.json#/definitions/status"},
+    "metadata": {"$ref": "common.schema.json#/definitions/metadata"},
+
+    "problem_statement": {
+      "type": "object",
+      "required": ["what_pain", "who_experiences", "why_now"],
+      "properties": {
+        "what_pain": {"$ref": "common.schema.json#/definitions/tagged_statement"},
+        "who_experiences": {"$ref": "common.schema.json#/definitions/tagged_statement"},
+        "why_now": {"$ref": "common.schema.json#/definitions/tagged_statement"}
+      }
+    },
+
+    "users": {
+      "type": "object",
+      "required": ["primary"],
+      "properties": {
+        "primary": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/definitions/persona"},
+          "minItems": 1
+        },
+        "secondary": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/definitions/persona"}
+        }
+      }
+    },
+
+    "jobs_to_be_done": {
+      "type": "object",
+      "properties": {
+        "functional": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^When I .+, I want to .+, so I can .+$"}
+        },
+        "emotional": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "social": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+
+    "anti_goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["goal", "rationale"],
+        "properties": {
+          "goal": {"type": "string"},
+          "rationale": {"type": "string"}
+        }
+      }
+    },
+
+    "success_metrics": {
+      "type": "object",
+      "required": ["north_star"],
+      "properties": {
+        "north_star": {"type": "string", "minLength": 1},
+        "leading_indicators": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/definitions/metric"},
+          "minItems": 1
+        },
+        "lagging_indicators": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/definitions/metric"}
+        }
+      }
+    },
+
+    "context": {
+      "type": "object",
+      "properties": {
+        "market": {"$ref": "common.schema.json#/definitions/tagged_statement"},
+        "technical": {"$ref": "common.schema.json#/definitions/tagged_statement"},
+        "organizational": {"$ref": "common.schema.json#/definitions/tagged_statement"},
+        "regulatory": {"$ref": "common.schema.json#/definitions/tagged_statement"}
+      }
+    }
+  }
+}
