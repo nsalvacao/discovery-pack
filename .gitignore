@@ -29,3 +29,9 @@ test-output/
 # Temporary
 .tmp/
 tmp/
+
+# Spec-Kit (keep structure, ignore sensitive data)
+.claude/chats/
+.claude/*.txt
+.specify/memory/*.json
+!.specify/memory/.gitkeep
