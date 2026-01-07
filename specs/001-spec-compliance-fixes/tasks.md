@@ -120,10 +120,10 @@ Single project at repository root:
 
 ### Content Analysis & Migration Planning
 
-- [ ] T033 [US3] Audit sub-skill content: Identify unique content vs duplication across 8 sub-skills (discovery-frame, discovery-decide, etc.)
-- [ ] T034 [US3] Create migration map: Allocate 440 lines per research.md R2 consolidation blueprint
-- [ ] T035 [US3] Extract workflow details: Move Phase 1-3 steps to `shared-references/workflows/lite-mode.md` (target ~150 lines)
-- [ ] T036 [US3] Extract workflow details: Move Phase 4-8 steps to `shared-references/workflows/full-mode.md` (target ~250 lines)
+- [X] T033 [US3] Audit sub-skill content: Identify unique content vs duplication across 8 sub-skills (discovery-frame, discovery-decide, etc.)
+- [X] T034 [US3] Create migration map: Allocate 440 lines per research.md R2 consolidation blueprint
+- [X] T035 [US3] Extract workflow details: Move Phase 1-3 steps to `shared-references/workflows/lite-mode.md` (target ~150 lines)
+- [X] T036 [US3] Extract workflow details: Move Phase 4-8 steps to `shared-references/workflows/full-mode.md` (target ~250 lines)
 
 ### Consolidation Implementation
 
