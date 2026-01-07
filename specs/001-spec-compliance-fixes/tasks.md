@@ -29,10 +29,10 @@ Single project at repository root:
 
 **Purpose**: Pre-flight checks and validation baseline
 
-- [ ] T001 Verify all prerequisite tools installed (Python 3.11+, Bash 5.0+, jq) *(Note: Validates development environment. See T026 for runtime skill pre-flight check.)*
-- [ ] T002 Run baseline validation: `python skill/discovery-pack/scripts/validate.py` to confirm 7/8 failures
-- [ ] T003 [P] Backup current skill directory: `cp -r skill/discovery-pack skill/discovery-pack.backup`
-- [ ] T004 [P] Create working branch: `git checkout -b 001-spec-compliance-fixes` (if not exists)
+- [X] T001 Verify all prerequisite tools installed (Python 3.11+, Bash 5.0+, jq) *(Note: Validates development environment. See T026 for runtime skill pre-flight check.)*
+- [X] T002 Run baseline validation: `python skill/discovery-pack/scripts/validate.py` to confirm 7/8 failures
+- [X] T003 [P] Backup current skill directory: `cp -r skill/discovery-pack skill/discovery-pack.backup`
+- [X] T004 [P] Create working branch: `git checkout -b 001-spec-compliance-fixes` (if not exists)
 
 **Checkpoint**: Environment ready - proceeding to P0 critical fixes
 
@@ -44,12 +44,12 @@ Single project at repository root:
 
 **⚠️ CRITICAL**: No user story work can begin until path resolution updated
 
-- [ ] T005 Create `skill/discovery-pack/shared-references/workflows/` directory structure
-- [ ] T006 Update `scripts/validate.py` to use relative paths via `Path(__file__).parent.parent`
-- [ ] T007 [P] Update `scripts/extract_assumptions.py` to use relative paths via `Path(__file__).parent.parent`
-- [ ] T008 [P] Update `scripts/gate_detector.py` to use relative paths (if has absolute paths)
-- [ ] T009 [P] Update `scripts/template_filler.py` to use relative paths (if has absolute paths)
-- [ ] T010 Test scripts: Run `python skill/discovery-pack/scripts/validate.py` from different working directories
+- [X] T005 Create `skill/discovery-pack/shared-references/workflows/` directory structure
+- [X] T006 Update `scripts/validate.py` to use relative paths via `Path(__file__).parent.parent`
+- [X] T007 [P] Update `scripts/extract_assumptions.py` to use relative paths via `Path(__file__).parent.parent`
+- [X] T008 [P] Update `scripts/gate_detector.py` to use relative paths (if has absolute paths)
+- [X] T009 [P] Update `scripts/template_filler.py` to use relative paths (if has absolute paths)
+- [X] T010 Test scripts: Run `python skill/discovery-pack/scripts/validate.py` from different working directories
 
 **Checkpoint**: Scripts portable - user story implementation can now begin
 

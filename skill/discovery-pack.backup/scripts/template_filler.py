@@ -15,7 +15,7 @@ from pathlib import Path
 from datetime import datetime
 import argparse
 
-SKILL_DIR = Path(__file__).parent.parent
+SKILL_DIR = Path.home() / ".copilot/skills/discovery-pack"
 TEMPLATE_DIR = SKILL_DIR / "templates"
 SCHEMA_DIR = SKILL_DIR / "schemas"
 

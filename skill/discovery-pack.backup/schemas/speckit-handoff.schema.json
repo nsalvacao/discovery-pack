@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spec-Kit Handoff Schema",
+  "type": "object",
+  "required": ["project", "date", "discovery_status", "constitution_input", "specify_input"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "project": {"type": "string"},
+    "date": {"type": "string", "format": "date"},
+    "discovery_status": {"type": "string", "enum": ["complete", "partial"]},
+    "metadata": {"$ref": "common.schema.json#/definitions/metadata"},
+    "constitution_input": {
+      "type": "object",
+      "required": ["principles", "constraints", "glossary"],
+      "properties": {
+        "principles": {"type": "array", "items": {"type": "object"}},
+        "constraints": {"type": "object"},
+        "architectural_decisions": {"type": "array", "items": {"type": "string"}},
+        "anti_goals": {"type": "array", "items": {"type": "string"}},
+        "glossary": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "specify_input": {
+      "type": "object",
+      "required": ["users", "journeys", "requirements", "success_metrics"],
+      "properties": {
+        "users": {"type": "array", "items": {"$ref": "common.schema.json#/definitions/persona"}},
+        "journeys": {"type": "array", "items": {"type": "object"}},
+        "requirements": {"type": "array", "items": {"type": "object"}},
+        "success_metrics": {"type": "object"},
+        "assumptions": {"type": "array", "items": {"type": "string"}},
+        "scope": {"type": "object"}
+      }
+    },
+    "artifacts_generated": {"type": "array", "items": {"type": "string"}},
+    "ready_for_speckit": {"type": "boolean"}
+  }
+}
