@@ -29,7 +29,7 @@ Single project at repository root:
 
 **Purpose**: Pre-flight checks and validation baseline
 
-- [ ] T001 Verify all prerequisite tools installed (Python 3.11+, Bash 5.0+, jq)
+- [ ] T001 Verify all prerequisite tools installed (Python 3.11+, Bash 5.0+, jq) *(Note: Validates development environment. See T026 for runtime skill pre-flight check.)*
 - [ ] T002 Run baseline validation: `python skill/discovery-pack/scripts/validate.py` to confirm 7/8 failures
 - [ ] T003 [P] Backup current skill directory: `cp -r skill/discovery-pack skill/discovery-pack.backup`
 - [ ] T004 [P] Create working branch: `git checkout -b 001-spec-compliance-fixes` (if not exists)
@@ -97,7 +97,7 @@ Single project at repository root:
 
 ### Pre-Flight Check Script
 
-- [ ] T026 [US2] Create `scripts/pre-flight-check.sh`: Verify templates/, schemas/, scripts/ dirs exist relative to skill root
+- [ ] T026 [US2] Create `scripts/pre-flight-check.sh`: Verify templates/, schemas/, scripts/ dirs exist relative to skill root *(Note: Runtime check for end users. See T001 for development environment validation.)*
 - [ ] T027 [US2] Add usage instructions for pre-flight check in SKILL.md
 
 ### Cross-Agent Testing

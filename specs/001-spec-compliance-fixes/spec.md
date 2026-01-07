@@ -34,7 +34,7 @@
 
 **Why this priority**: Hardcoded \`~/.copilot/\` paths break portability, violating Principle III and preventing 40%+ of potential users (non-Copilot agents) from using the skill.
 
-**Independent Test**: Install skill in Claude Code (\`~/.claude/skills/\`) and run lite mode. All scripts MUST execute without "file not found" errors.
+**Independent Test**: Install skill in Claude Code (\`~/.claude/skills/discovery-pack/\`), cd to skill root directory, and run lite mode. All scripts MUST execute without "file not found" errors.
 
 **Acceptance Scenarios**:
 
