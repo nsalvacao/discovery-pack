@@ -74,8 +74,8 @@ Single project at repository root:
 
 ### Validation & Documentation
 
-- [ ] T019 [US1] Run validation: `python skill/discovery-pack/scripts/validate.py` → expect 8/8 pass
-- [ ] T020 [US1] Update CHANGELOG.md: Document Issue #1 resolution (schema-template sync 12.5%→100%)
+- [X] T019 [US1] Run validation: `python skill/discovery-pack/scripts/validate.py` → expect 8/8 pass
+- [X] T020 [US1] Update CHANGELOG.md: Document Issue #1 resolution (schema-template sync 12.5%→100%)
 - [ ] T021 [US1] Commit atomically: `fix(templates): synchronize 7 templates with JSON schemas (Issue #1)`
 
 **✅ US1 Complete**: All artifacts pass schema validation

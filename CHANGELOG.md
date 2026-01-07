@@ -5,6 +5,26 @@ All notable changes to Discovery Pack will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+#### Issue #1: Schema-Template Synchronization (12.5% → 100% validation)
+- Fixed `00_problem-frame.md`: Aligned problem_statement fields with schema (what_pain, who_experiences, why_now)
+- Fixed `01_constraints-nfr.md`: Converted performance.throughput from object to array of metrics
+- Fixed `02_domain-model.md`: Renamed bounded_contexts.context → name, description → responsibility
+- Fixed `05_validation-plan.md`: Added required exit_criteria field at root level
+- Fixed `06_decision-log.md`: Removed nullable superseded_by field (schema expects string or omit)
+- Fixed `07_speckit-handoff.md`: Added missing constitution_input.glossary field
+- Verified `03_option-space.md` and `04_assumptions-unknowns.md`: Already schema-compliant
+- **Result**: All 8 templates now pass JSON schema validation (100% success rate)
+
+#### Issue #2: Cross-Agent Portability (Path Resolution)
+- Fixed `scripts/template_filler.py`: Replaced `Path.home() / ".copilot/skills/discovery-pack"` with `Path(__file__).parent.parent`
+- Verified `scripts/validate.py`: Already uses relative paths correctly
+- Verified `scripts/ci-validate.sh`: Already uses `${BASH_SOURCE[0]}` correctly
+- **Result**: Scripts now portable across Claude Code, Copilot CLI, and project-local installations
+
 ## [1.0.0] - 2026-01-06
 
 ### Added
