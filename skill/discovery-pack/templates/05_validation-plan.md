@@ -22,6 +22,8 @@ validation_strategy:
     cost: "[$ or effort]"
     resources: "[Team availability, tools needed]"
 
+exit_criteria: "[Overall conditions to proceed from discovery to implementation]"
+
 experiments:
   - id: "E1"
     title: "[Experiment Title]"

@@ -4,353 +4,271 @@ description: Complete project discovery workflow using Jobs-to-be-Done, Amazon P
 license: MIT
 metadata:
   author: nsalvacao
-  version: "1.1.0"
-  requires: "Python 3.8+ for optional automation scripts"
+  version: "2.0.0"
+  requires: "Python 3.11+ for optional automation scripts"
   changelog:
-    - "1.1.0: Enhanced mode selection enforcement, output directory fallback strategy, automation workflow, validation checkpoint"
+    - "2.0.0: Flat architecture consolidation, cross-agent portability, schema-template sync, progressive disclosure"
+    - "1.1.0: Enhanced mode selection enforcement, output directory fallback strategy, automation workflow"
     - "1.0.0: Initial release"
 ---
 
 # Discovery Pack Workflow
 
-This skill package guides structured project discovery using proven methodologies. You will help the user transform ambiguous ideas into clear specifications before implementation begins.
+Structured project discovery using proven methodologies (JTBD, Amazon PR/FAQ, ADR, Lean Startup, DDD). Transforms ambiguous ideas into clear, validated specifications ready for spec-kit handoff.
 
-## Core Methodologies Applied
+## Quick Start
 
-- **Jobs-to-be-Done (JTBD)**: Focus on user motivation and context, not just features
-- **Amazon PR/FAQ**: Force clarity on problem and customer before solutions
-- **Architecture Decision Records (ADR)**: Document decisions with context and rationale
-- **Lean Startup**: Validate critical assumptions through experiments
-- **Domain-Driven Design (DDD)**: Model problem domain with ubiquitous language
+**Activation Triggers**: "discovery", "requirements discovery", "project framing", "validate assumptions", "JTBD analysis"
 
-See `shared-references/methodologies.md` for methodology details.
-See `shared-references/glossary.md` for terminology.
+**Two Modes**:
+- **Lite** (3 artifacts, 15-30 min): Small projects, <5 people, low risk, personal/startup
+- **Full** (8 artifacts, 1-2 hours): Enterprise, compliance, security-critical, high risk
 
-## When to Activate
-
-Activate this skill when the user:
-- Starts a new project with unclear requirements
-- Asks to "frame the problem" or "understand requirements"
-- Mentions "discovery", "JTBD", "validation", or "assumptions"
-- Needs to compare multiple technical approaches
-- Wants to generate spec-kit compatible outputs
-- Asks "what should I build?" or "how do I validate this idea?"
-
-Do NOT activate for:
-- Well-defined implementation tasks
-- Requirements already documented and clear
-- Quick prototypes without rigorous discovery
-
-## Sub-Skills Available
-
-This package contains 8 specialized sub-skills. You can invoke them individually or orchestrate the full workflow:
-
-| Sub-Skill | Purpose | Invoke When |
-|-----------|---------|-------------|
-| `discovery-run` | Orchestrator for complete workflow | User wants full discovery process |
-| `discovery-frame` | Problem framing with JTBD | User asks "frame the problem" |
-| `discovery-constraints` | Non-functional requirements | User asks about constraints, security, performance |
-| `discovery-domain` | Domain modeling with DDD | User asks to model entities, events, glossary |
-| `discovery-options` | Option analysis with trade-offs | User asks to compare approaches |
-| `discovery-validate` | Validation experiments | User asks to validate assumptions |
-| `discovery-decide` | Decision log in ADR format | User asks to document decisions |
-| `discovery-handoff` | Spec-kit integration | User asks for handoff to implementation |
-
-## Execution Modes
-
-### Lite Mode (Recommended Default)
-
-Generate 3 artifacts for small projects, low risk, < 5 people:
-
-**Artifacts:**
-1. `00_problem-frame.md` - Problem, users, JTBD, success metrics
-2. `03_option-space.md` - Alternative approaches with trade-off matrix
-3. `07_speckit-handoff.md` - Spec-kit compatible handoff
-
-**Time:** 15-30 minutes of conversation
-
-**When to use:** Personal projects, startups, prototypes, clear constraints
-
-### Full Mode (Enterprise/Compliance)
-
-Generate 7 artifacts for enterprise, compliance-critical, security-sensitive projects:
-
-**Additional artifacts beyond lite mode:**
-4. `01_constraints-nfr.md` - Security, performance, compliance requirements
-5. `02_domain-model.md` - Entities, events, bounded contexts, glossary
-6. `04_assumptions-unknowns.md` - Extracted tagged assumptions (auto-generated)
-7. `05_validation-plan.md` - Experiments to test critical assumptions
-8. `06_decision-log.md` - Architectural decisions with rationale
-
-**Time:** 1-2 hours of conversation
-
-**When to use:** Enterprise projects, regulated industries, high-risk systems
-
-## Execution Workflow
-
-### Step 1: Determine Mode (MANDATORY)
-
-**ALWAYS ask this question first, before any artifact generation:**
-
-> **Discovery mode selection:**
-> - **lite** (3 artifacts): Small projects, < 5 people, low risk, personal/startup [15-30 min]
-> - **full** (7 artifacts): Enterprise, compliance, security-critical, high risk [1-2 hours]
->
-> **Your choice:** lite | full | (auto-detect from project context)
-
-If user says "just start" or doesn't respond: infer from project context:
-- Personal/startup/prototype → lite
-- Enterprise/finance/healthcare/security → full (with confirmation)
-
-**CRITICAL:** Never proceed to Step 2 without mode selection.
-
-### Step 1.5: Check Automation Availability
-
-Run these checks once per session:
-
+**Pre-Flight Check**:
 ```bash
-# Check Python + dependencies
-python3 -c "import jsonschema, yaml; print('✅ Automation available')" 2>&1
+bash scripts/pre-flight-check.sh <output-dir> <mode>
 ```
 
-**If automation available:**
-- Inform user: "Automation scripts available (30-40% token savings). Using enhanced workflow."
-- Use `extract_assumptions.py`, `generate_handoff.py`, `validate.py` where applicable
+## Core Methodologies
 
-**If automation unavailable:**
-- Proceed manually (current behavior)
-- Optionally suggest: `pip install -r ~/.copilot/skills/discovery-pack/scripts/requirements.txt`
+| Methodology | Purpose | Applied In |
+|-------------|---------|------------|
+| **Jobs-to-be-Done (JTBD)** | User motivation & context | Problem framing (00) |
+| **Amazon PR/FAQ** | Customer clarity | Problem framing (00) |
+| **ADR** | Decision rationale | Decision log (06) |
+| **Lean Startup** | Assumption validation | Validation plan (05) |
+| **DDD** | Domain language | Domain model (02) |
 
-### Step 2: Determine Output Directory
+📖 Details: `shared-references/methodologies.md`, `shared-references/glossary.md`
 
-**Target:** `<project-root>/docs/discovery/$(date +%Y-%m-%d)-<topic-slug>`
+## Installation & Paths
 
-**Fallback strategy if target inaccessible:**
-1. Try `$HOME/docs/discovery/...` (user home directory)
-2. If still blocked, try `/tmp/discovery-pack/...` AND warn user:
-   ⚠️ "Artifacts in /tmp (temporary). Copy to project after generation."
-3. If all fail, output as markdown code blocks for manual save
+**Supported Locations**:
+- `~/.copilot/skills/discovery-pack/` (GitHub Copilot CLI)
+- `~/.claude/skills/discovery-pack/` (Claude Code)
+- `.claude/skills/discovery-pack/` (project-local)
+- Any custom location (relative path resolution)
 
-**Always inform user of final path before generation.**
-
+**Script Invocation**:
 ```bash
-mkdir -p <determined-output-directory>
-```
+# From skill root:
+python3 scripts/validate.py <output-dir>
 
-All artifacts go into this timestamped directory.
-
-### Step 3: Execute Discovery Sequence
-
-**For lite mode:**
-1. Invoke sub-skill `discovery-frame` → generates `00_problem-frame.md`
-2. Invoke sub-skill `discovery-options` → generates `03_option-space.md`
-3. Invoke sub-skill `discovery-handoff` → generates `07_speckit-handoff.md`
-
-**For full mode:**
-1. Invoke `discovery-frame` → `00_problem-frame.md`
-2. Invoke `discovery-constraints` → `01_constraints-nfr.md`
-3. Invoke `discovery-domain` → `02_domain-model.md`
-4. Invoke `discovery-options` → `03_option-space.md`
-5. Run `scripts/extract_assumptions.py` → `04_assumptions-unknowns.md` (or generate manually)
-6. Invoke `discovery-validate` → `05_validation-plan.md`
-7. Invoke `discovery-decide` → `06_decision-log.md`
-8. Invoke `discovery-handoff` → `07_speckit-handoff.md`
-
-### Step 4: Apply Tag System
-
-Use epistemic tags consistently across all artifacts:
-
-- `[FACT]` - Verified with data/research (e.g., "80% users on mobile [FACT - analytics]")
-- `[ASSUMPTION]` - Testable hypothesis (e.g., "Users prefer dark mode [ASSUMPTION]")
-- `[HYPOTHESIS]` - Educated guess (e.g., "Real-time sync increases retention [HYPOTHESIS]")
-- `[CONSTRAINT]` - Non-negotiable (e.g., "Must run on WSL [CONSTRAINT - technical]")
-
-This makes assumptions explicit and testable.
-
-### Step 5: Use Templates
-
-All templates are in `templates/` directory:
-- `00_problem-frame.md`
-- `01_constraints-nfr.md`
-- `02_domain-model.md`
-- `03_option-space.md`
-- `04_assumptions-unknowns.md`
-- `05_validation-plan.md`
-- `06_decision-log.md`
-- `07_speckit-handoff.md`
-
-Each template contains:
-- **YAML frontmatter** with structured data (validates against schemas in `schemas/`)
-- **Markdown body** with section prompts
-
-Read the template from `templates/` directory, fill sections based on conversation, maintain structure.
-
-### Step 6: Batch vs Interactive Execution
-
-**Batch Mode (default):**
-- Ask minimal questions
-- Mark unknowns as `[ASSUMPTION]`
-- Faster execution
-
-**Interactive Mode:**
-- Ask questions ONLY at critical gates:
-  1. Options tied in trade-off matrix (need decision criteria)
-  2. Contradictory assumptions detected (need prioritization)
-  3. Validation plan lacks quantitative metrics (need measurement definition)
-
-For all other unknowns, make reasonable assumptions and tag them.
-
-### Step 7: Validation & Handoff
-
-**If automation available:**
-```bash
+# From anywhere:
 python3 ~/.copilot/skills/discovery-pack/scripts/validate.py <output-dir>
 ```
 
-**If validation fails:**
-- Show errors with artifact + line number
-- Offer to fix automatically (if simple) or guide manual fix
-- Re-validate after fix
+All scripts use relative path resolution (`Path(__file__)` / `${BASH_SOURCE[0]}`).
 
-**If validation passes or unavailable:**
-- Generate handoff summary:
-
-```
-✅ Discovery complete!
-
-Artifacts: <output-dir>
-  [List files with sizes and validation status]
-
-Next steps:
-1. Review 07_speckit-handoff.md
-2. Copy Constitution section → /speckit.constitution
-3. Copy Specify section → /speckit.specify
-
-[If automation used] Token efficiency: ~35% savings via automation
-```
-
-## Artifact Structure
-
-Each artifact you generate must contain:
-
-**YAML Frontmatter:**
-```yaml
 ---
-project: "Project Name"
-date: "YYYY-MM-DD"
-status: "draft"  # or under_review, approved, deprecated
-metadata:
-  generated_at: "ISO-8601 timestamp"
-  generated_by: "your-model-name"
-  discovery_pack_version: "1.0.0"
 
-# Structured data matching schema
+## Workflow Orchestration
+
+### Step 1: Mode Selection (MANDATORY)
+
+🛑 **ALWAYS ask first**:
+
+| Mode | Artifacts | Time | Best For |
+|------|-----------|------|----------|
+| **lite** | 3 (00, 03, 07) | 15-30 min | Small projects, low risk, <5 people |
+| **full** | 8 (00-07) | 1-2 hours | Enterprise, compliance, high risk |
+
+**Decision Tree**:
+- Enterprise/regulated/security-critical? → **full**
+- Multi-team/multi-stakeholder? → **full**
+- Personal/startup/prototype? → **lite**
+- Unsure? → **lite** (can upgrade later)
+
+**Automation Check**:
+```bash
+# Optional but recommended (30-40% token savings)
+pip install -r scripts/requirements.txt
+```
+
+### Step 2: Output Directory
+
+**Target**: `<project-root>/docs/discovery/YYYY-MM-DD-<topic-slug>`
+
+**Examples**:
+- `/docs/discovery/2026-01-07-user-auth`
+- `/docs/discovery/2026-01-07-api-redesign`
+
+**Auto-create if missing** (scripts handle this).
+
+### Step 3: Execute Workflow
+
+**Progressive Disclosure Strategy**: Load detailed workflow only when starting execution.
+
+#### 🔵 Lite Mode (3 artifacts)
+
+**Workflow File**: `shared-references/workflows/lite-mode.md`
+
+**Quick Overview**:
+1. **Problem Framing** (00) → Load `templates/00_problem-frame.md`, fill YAML, validate
+2. **Option Analysis** (03) → Load `templates/03_option-space.md`, compare 2+ options, recommend
+3. **Handoff** (07) → Load `templates/07_speckit-handoff.md`, prepare spec-kit input
+
+**Load detailed instructions**: Read `shared-references/workflows/lite-mode.md` before starting Phase 1.
+
+#### 🟣 Full Mode (8 artifacts)
+
+**Workflow File**: `shared-references/workflows/full-mode.md`
+
+**Quick Overview**:
+1. **Problem Framing** (00) → Foundation
+2. **Constraints** (01) → Security, performance, observability boundaries
+3. **Domain Model** (02) → Entities, bounded contexts, ubiquitous language
+4. **Option Analysis** (03) → Alternatives comparison
+5. **Assumptions** (04) → **Auto-generated** via `extract_assumptions.py`
+6. **Validation Plan** (05) → Experiments to test assumptions
+7. **Decision Log** (06) → ADR format decisions
+8. **Handoff** (07) → Spec-kit integration
+
+**Load detailed instructions**: Read `shared-references/workflows/full-mode.md` before starting Phase 1.
+
+### Step 4: Validation Gate (MANDATORY)
+
+🛑 **After artifact generation**:
+
+```bash
+python3 scripts/validate.py <output-dir>
+```
+
+**Expected Output**:
+```
+✅ 00_problem-frame.md: Valid
+✅ 03_option-space.md: Valid
+✅ 07_speckit-handoff.md: Valid
+📊 Summary: 3/3 artifacts valid (100%)
+```
+
+**If validation fails**:
+1. Read error message (shows file + field + expected format)
+2. Fix YAML frontmatter (common: missing fields, wrong types, invalid enums)
+3. Re-validate until 100% pass
+
+**No progression without 100% validation pass** (schema compliance mandatory).
+
 ---
-```
 
-**Markdown Body:**
-- Clear section headings
-- Tagged statements (FACT/ASSUMPTION/HYPOTHESIS/CONSTRAINT)
-- Concrete examples and evidence
-- Actionable next steps
+## Artifact Reference
 
-## Automation Scripts (Optional)
+| ID | Name | Lite | Full | Auto | Template |
+|----|------|------|------|------|----------|
+| 00 | Problem Frame | ✓ | ✓ | - | `templates/00_problem-frame.md` |
+| 01 | Constraints & NFRs | - | ✓ | - | `templates/01_constraints-nfr.md` |
+| 02 | Domain Model | - | ✓ | - | `templates/02_domain-model.md` |
+| 03 | Option Space | ✓ | ✓ | - | `templates/03_option-space.md` |
+| 04 | Assumptions | - | ✓ | ✓ | Auto via `extract_assumptions.py` |
+| 05 | Validation Plan | - | ✓ | - | `templates/05_validation-plan.md` |
+| 06 | Decision Log | - | ✓ | - | `templates/06_decision-log.md` |
+| 07 | Spec-Kit Handoff | ✓ | ✓ | - | `templates/07_speckit-handoff.md` |
 
-If Python is available, these scripts enhance workflow:
+**Template Loading**: Load template **only** when generating that specific artifact (progressive disclosure).
 
-| Script | Purpose | Command |
-|--------|---------|---------|
-| `validate.py` | Validate artifacts against JSON schemas | `python scripts/validate.py docs/discovery/project/` |
-| `extract_assumptions.py` | Auto-extract tagged assumptions to 04_ | `python scripts/extract_assumptions.py docs/discovery/project/` |
-| `generate_handoff.py` | Auto-generate 07_ from 00-06 | `python scripts/generate_handoff.py docs/discovery/project/` |
-| `gate_detector.py` | Detect critical decision gates | `python scripts/gate_detector.py docs/discovery/project/` |
+---
 
-Scripts are optional. If unavailable, generate manually following templates.
+## Automation Scripts
 
-## Integration with Spec-Kit
+| Script | Purpose | When to Use |
+|--------|---------|-------------|
+| `pre-flight-check.sh` | Validate environment | Before starting workflow |
+| `validate.py` | Schema validation | After each artifact / end of workflow |
+| `extract_assumptions.py` | Generate 04 from 00-03 | Full mode, after 00-03 complete |
+| `ci-validate.sh` | CI/CD integration | Automated validation in pipelines |
 
-The final artifact `07_speckit-handoff.md` contains two ready-to-copy sections:
+**Token Savings**: Automation provides ~30-40% token reduction vs manual execution.
 
-**Constitution Section:**
-- Core principles from problem frame
-- Constraints from NFRs
-- Glossary from domain model
+---
 
-**Specify Section:**
-- User journeys from JTBD analysis
-- Requirements from problem frame
-- Success metrics
-- Non-goals (anti-goals)
+## Quality Gates
 
-User can copy these directly to `/speckit.constitution` and `/speckit.specify` commands.
+### Pre-Flight Requirements
+- [ ] Mode selected (lite/full)
+- [ ] Output directory determined
+- [ ] Python 3.11+ available (if using automation)
+- [ ] Templates accessible via relative paths
 
-## Best Practices
+### Artifact Quality
+- [ ] 100% schema validation pass
+- [ ] All required YAML fields present
+- [ ] Epistemic tags used ([ASSUMPTION], [HYPOTHESIS], [CONSTRAINT])
+- [ ] Cross-references between artifacts (e.g., 05 links to 04 assumption IDs)
 
-**DO:**
-- Use templates consistently
-- Apply tag system to every claim
-- Keep sections focused and actionable
-- Ask clarifying questions when truly blocked
-- Mark assumptions explicitly
-- Provide concrete examples
+### Handoff Criteria
+- [ ] All planned artifacts generated
+- [ ] Validation passes 100%
+- [ ] 07_speckit-handoff.md marks `ready_for_speckit: true`
+- [ ] Stakeholder review complete
 
-**DON'T:**
-- Skip frontmatter YAML (breaks validation)
-- Make assumptions without tagging them
-- Generate verbose prose without structure
-- Ask excessive questions (prefer batch mode)
-- Copy user's words verbatim (synthesize and structure)
+---
 
-## Progressive Disclosure
+## Token Optimization
 
-You are currently reading **Level 2** (full SKILL.md content).
+**Progressive Disclosure Pattern**:
+1. Load workflow file **only** when starting execution (not upfront)
+2. Load template **only** when generating that artifact
+3. Load methodology details **only** when user asks clarifying questions
+4. Use automation scripts (reduces 30-40% tokens)
 
-**Level 3 resources** available as needed:
-- `templates/*.md` - Detailed artifact templates
-- `schemas/*.json` - Validation schemas
-- `shared-references/methodologies.md` - Methodology deep-dive
-- `shared-references/glossary.md` - Complete terminology
-- `scripts/README.md` - Automation documentation
+**Target Token Budget**:
+- Lite mode: ≤15k tokens
+- Full mode: ≤25k tokens
 
-Load Level 3 resources only when needed for the current task.
+**High Token Operations** (avoid unless necessary):
+- Reading all templates upfront
+- Inline methodology explanations (use references)
+- Verbose examples (use workflow files)
 
-## Example Execution
+---
 
-**User:** "I want to build a local dashboard that syncs GitHub project status"
+## Troubleshooting
 
-**Your response:**
-```
-I'll run discovery in lite mode to frame the problem and explore options.
+### Validation Errors
 
-Creating: docs/discovery/2026-01-06-github-dashboard/
+| Error Type | Symptom | Fix |
+|------------|---------|-----|
+| Missing field | `Missing required field: X.Y.Z` | Add field to YAML frontmatter |
+| Type mismatch | `Expected array, got object` | Convert format (e.g., single → list) |
+| Invalid enum | `Value not in enum: [...]` | Use valid enum value from error |
+| YAML syntax | `could not parse YAML` | Check indentation, colons, quotes |
 
-Phase 1/3: Problem framing with JTBD...
-[Read template 00_problem-frame.md]
-[Generate structured artifact with YAML + markdown]
-✅ Generated 00_problem-frame.md
-   - JTBD: "When context-switching, I want to see all project statuses, so I can prioritize work"
-   - North star: Time to triage 5 projects (15min → 2min)
+### Common Issues
 
-Phase 2/3: Option analysis...
-[Read template 03_option-space.md]
-[Generate trade-off matrix comparing 3 approaches]
-✅ Generated 03_option-space.md
-   - Option A: GitHub API + Electron (score: 4.2/5)
-   - Option B: MCP Server integration (score: 3.8/5)
-   - Option C: Use GitHub Projects (score: 2.1/5)
-   Recommendation: Option A (offline-first, full control)
+**Scripts not found**:
+- Verify working directory (should be skill root)
+- Or use full path: `~/.copilot/skills/discovery-pack/scripts/...`
 
-Phase 3/3: Spec-kit handoff...
-[Read template 07_speckit-handoff.md]
-[Extract key sections from 00 and 03 into handoff format]
-✅ Generated 07_speckit-handoff.md
-   - Constitution section ready
-   - Specify section ready
+**Automation unavailable**:
+- Install dependencies: `pip install -r scripts/requirements.txt`
+- Or proceed manually (workflow files guide you)
 
-Discovery complete! Artifacts in docs/discovery/2026-01-06-github-dashboard/
-Next: Review 07_speckit-handoff.md → copy to spec-kit
-```
+**Template loading fails**:
+- Check `templates/` directory exists relative to skill root
+- Verify path resolution working (run `pre-flight-check.sh`)
 
-## Summary
+---
 
-You are the orchestrator of a rigorous discovery workflow. Guide the user through structured problem framing, option analysis, and validation using proven methodologies. Generate well-structured artifacts with epistemic tags. Default to batch mode with minimal questions. Focus on clarity, evidence, and actionable outputs.
+## Next Steps After Discovery
+
+1. **Review artifacts** with stakeholders
+2. **Execute validation experiments** from 05_validation-plan.md (if full mode)
+3. **Start spec-kit workflow**: Use 07_speckit-handoff.md as input to `/speckit.constitution`
+4. **Discovery complete** → Proceed to specification phase
+
+---
+
+## Version History
+
+- **2.0.0** (2026-01-07): Flat architecture (1 SKILL.md), cross-agent portability, 100% schema validation
+- **1.1.0** (2026-01-06): Enhanced enforcement, automation workflow
+- **1.0.0** (2026-01-05): Initial release with 8 sub-skills
+
+## Support & References
+
+- **Methodologies**: `shared-references/methodologies.md`
+- **Glossary**: `shared-references/glossary.md`
+- **Lite Workflow**: `shared-references/workflows/lite-mode.md`
+- **Full Workflow**: `shared-references/workflows/full-mode.md`
+- **Schemas**: `schemas/*.schema.json`
+- **Templates**: `templates/*.md`

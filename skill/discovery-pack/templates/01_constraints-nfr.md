@@ -31,20 +31,17 @@ security:
         mitigation: "[Mitigation strategy]"
 
 performance:
-  response_time:
+  response_time_targets:
     - operation: "[API call]"
-      target_p95: "[200ms]"
-      max_acceptable: "[500ms]"
-      measurement_point: "[Client/Server]"
+      target: "p95 [200ms]"
+      tag: "ASSUMPTION"
   throughput:
-    requests_per_second: "[Target]"
-    concurrent_users: "[Target]"
-    data_volume: "[Expected growth]"
-  scalability:
-    approach: "[Horizontal/Vertical]"
-    constraints:
-      - "[Geographic distribution needs]"
-    tag: "CONSTRAINT"
+    - metric: "requests_per_second"
+      value: "[Target RPS]"
+      tag: "ASSUMPTION"
+    - metric: "concurrent_users"
+      value: "[Target concurrent users]"
+      tag: "ASSUMPTION"
 
 availability:
   uptime:

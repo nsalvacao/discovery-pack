@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Plan Schema",
+  "type": "object",
+  "required": ["project", "date", "experiments", "exit_criteria"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "project": {"type": "string"},
+    "date": {"type": "string", "format": "date"},
+    "status": {"type": "string", "enum": ["planning", "executing", "complete"]},
+    "metadata": {"$ref": "common.schema.json#/definitions/metadata"},
+    "experiments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "hypothesis", "method", "success_criteria"],
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "hypothesis": {"type": "string", "pattern": "^We believe that .+\\. We'll know we're right when .+$"},
+          "assumption_tested": {"type": "string"},
+          "method": {
+            "type": "object",
+            "required": ["type", "steps", "duration"],
+            "properties": {
+              "type": {"type": "string", "enum": ["ab_test", "user_interview", "prototype", "spike", "market_research", "other"]},
+              "steps": {"type": "array", "items": {"type": "string"}},
+              "duration": {"type": "string"},
+              "participants": {"type": "string"},
+              "tools_needed": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "success_criteria": {
+            "type": "object",
+            "required": ["quantitative", "qualitative"],
+            "properties": {
+              "quantitative": {
+                "type": "object",
+                "properties": {
+                  "pass_if": {"type": "string"},
+                  "fail_if": {"type": "string"}
+                }
+              },
+              "qualitative": {
+                "type": "object",
+                "properties": {
+                  "pass_if": {"type": "string"},
+                  "fail_if": {"type": "string"}
+                }
+              }
+            }
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "status": {"type": "string", "enum": ["pending", "in_progress", "validated", "rejected", "inconclusive"]},
+              "data": {"type": "array", "items": {"type": "string"}},
+              "interpretation": {"type": "string"},
+              "date_completed": {"type": "string", "format": "date"}
+            }
+          }
+        }
+      }
+    },
+    "exit_criteria": {
+      "type": "object",
+      "required": ["proceed_if", "pivot_if", "kill_if"],
+      "properties": {
+        "proceed_if": {"type": "array", "items": {"type": "string"}},
+        "pivot_if": {"type": "array", "items": {"type": "string"}},
+        "kill_if": {"type": "array", "items": {"type": "string"}},
+        "confidence_threshold": {"type": "string"}
+      }
+    }
+  }
+}

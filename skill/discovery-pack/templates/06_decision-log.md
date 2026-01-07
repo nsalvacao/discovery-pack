@@ -28,7 +28,6 @@ decisions:
         reason: "[Why rejected]"
     open_questions:
       - "[Question still unresolved]"
-    superseded_by: null
 ---
 
 # Decision Log

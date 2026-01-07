@@ -35,3 +35,6 @@ tmp/
 .claude/*.txt
 .specify/memory/*.json
 !.specify/memory/.gitkeep
+/.claude
+/.specify
+/specs

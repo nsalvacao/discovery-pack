@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Discovery Pack Common Definitions",
+  "definitions": {
+    "tag": {
+      "type": "string",
+      "enum": ["FACT", "ASSUMPTION", "HYPOTHESIS", "CONSTRAINT"],
+      "description": "Epistemic tag for statements"
+    },
+    "tagged_statement": {
+      "type": "object",
+      "required": ["tag", "statement"],
+      "properties": {
+        "tag": {"$ref": "#/definitions/tag"},
+        "statement": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string"},
+        "source": {"type": "string"}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["generated_at", "generated_by", "discovery_pack_version"],
+      "properties": {
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp"
+        },
+        "generated_by": {
+          "type": "string",
+          "description": "AI model identifier (e.g., claude-sonnet-4.5)"
+        },
+        "discovery_pack_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Time taken to generate"
+        },
+        "validated": {
+          "type": "boolean",
+          "description": "Whether schema validation passed"
+        },
+        "validation_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "persona": {
+      "type": "object",
+      "required": ["name", "role", "jtbd"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "jtbd": {
+          "type": "string",
+          "pattern": "^When I .+, I want to .+, so I can .+$",
+          "description": "Jobs-to-be-Done format"
+        },
+        "pain_points": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "required": ["name", "target", "measurement_method"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "baseline": {"type": "string"},
+        "target": {"type": "string", "minLength": 1},
+        "measurement_method": {"type": "string", "minLength": 1},
+        "frequency": {
+          "type": "string",
+          "enum": ["real-time", "daily", "weekly", "monthly", "on-demand"]
+        }
+      }
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "under_review", "approved", "deprecated"]
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    }
+  }
+}

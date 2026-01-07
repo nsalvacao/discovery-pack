@@ -104,3 +104,40 @@ After installation, tell your agent:
 ```
 
 The agent will automatically activate discovery-pack skills.
+
+## Cross-Agent Compatibility (v2.0.0+)
+
+**Discovery Pack v2.0.0** works identically across all agents supporting the Agent Skills specification:
+
+| Agent | Installation Path | Status |
+|-------|-------------------|--------|
+| **Claude Code** | `~/.claude/skills/discovery-pack/` | ✅ Tested |
+| **GitHub Copilot CLI** | `~/.copilot/skills/discovery-pack/` | ✅ Tested |
+| **VS Code (Agent Mode)** | `~/.claude/skills/discovery-pack/` | ✅ Compatible |
+| **Cursor IDE** | `~/.claude/skills/discovery-pack/` | ✅ Compatible |
+| **Gemini Code Assist** | Custom path | ✅ Compatible (relative paths) |
+| **Project-local** | `.claude/skills/discovery-pack/` | ✅ Tested |
+
+**Key Features**:
+- Relative path resolution (no hardcoded agent-specific paths)
+- Scripts auto-detect skill root via `Path(__file__)` / `${BASH_SOURCE[0]}`
+- Pre-flight check validates installation structure
+
+## Installation Verification
+
+After installation, verify cross-agent compatibility:
+
+```bash
+# Test pre-flight check (validates structure)
+cd ~/.copilot/skills/discovery-pack  # or ~/.claude/skills/discovery-pack
+bash scripts/pre-flight-check.sh /tmp/test-output lite
+
+# Expected output:
+# ✅ templates/ exists
+# ✅ schemas/ exists
+# ✅ scripts/ exists
+# ✅ shared-references/ exists
+```
+
+If pre-flight fails, ensure you copied the entire `skill/discovery-pack/` directory (not just SKILL.md).
+

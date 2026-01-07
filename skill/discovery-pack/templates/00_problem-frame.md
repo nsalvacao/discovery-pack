@@ -10,15 +10,9 @@ metadata:
   validated: false
 
 problem_statement:
-  description: "[Clear, concise description of the problem]"
-  tag: "ASSUMPTION"
-  pain_points:
-    - "[Pain point 1]"
-    - "[Pain point 2]"
-  affected_users:
-    - "[User group 1]"
-    - "[User group 2]"
-  urgency: "[Why this matters now]"
+  what_pain: "[Clear, concise description of the problem]"
+  who_experiences: "[User groups affected]"
+  why_now: "[Why this matters now]"
 
 users:
   primary:
