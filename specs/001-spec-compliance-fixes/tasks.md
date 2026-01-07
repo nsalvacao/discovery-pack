@@ -127,15 +127,15 @@ Single project at repository root:
 
 ### Consolidation Implementation
 
-- [ ] T037 [US3] Rewrite `skill/discovery-pack/SKILL.md`: Consolidate core instructions (<450 lines) with pointers to workflow files
-- [ ] T038 [US3] Apply progressive disclosure: Replace verbose methodology text with references to `shared-references/methodologies.md`
-- [ ] T039 [US3] Delete sub-skill directories: `rm -rf skill/discovery-pack/discovery-{frame,decide,domain,validate,risk,decide-adv,coordinate,handoff}/`
-- [ ] T040 [US3] Update `.gitignore` if sub-skill dirs were tracked
+- [X] T037 [US3] Rewrite `skill/discovery-pack/SKILL.md`: Consolidate core instructions (<450 lines) with pointers to workflow files
+- [X] T038 [US3] Apply progressive disclosure: Replace verbose methodology text with references to `shared-references/methodologies.md`
+- [X] T039 [US3] Delete sub-skill directories: `rm -rf skill/discovery-pack/discovery-{frame,decide,domain,validate,risk,decide-adv,coordinate,handoff}/`
+- [X] T040 [US3] Update `.gitignore` if sub-skill dirs were tracked
 
 ### Validation & Documentation
 
-- [ ] T041 [US3] Verify line count: `wc -l skill/discovery-pack/SKILL.md` (target: 400-450 lines)
-- [ ] T042 [US3] Verify single file: `find skill/discovery-pack -name SKILL.md | wc -l` outputs 1
+- [X] T041 [US3] Verify line count: `wc -l skill/discovery-pack/SKILL.md` (target: 400-450 lines)
+- [X] T042 [US3] Verify single file: `find skill/discovery-pack -name SKILL.md | wc -l` outputs 1
 - [ ] T043 [US3] Test lite mode: Run discovery-run to ensure workflow file references load correctly
 - [ ] T044 [US3] Update CHANGELOG.md: Document Issue #3 resolution (flat architecture: 9→1 SKILL.md, 1445→<450 lines)
 - [ ] T045 [US3] Commit atomically: `refactor(skill): consolidate to flat architecture <450 lines (Issue #3)`
