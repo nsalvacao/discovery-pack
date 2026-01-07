@@ -172,10 +172,11 @@ python3 scripts/validate.py <output-dir>
 
 | Script | Purpose | When to Use |
 |--------|---------|-------------|
-| `pre-flight-check.sh` | Validate environment | Before starting workflow |
-| `validate.py` | Schema validation | After each artifact / end of workflow |
-| `extract_assumptions.py` | Generate 04 from 00-03 | Full mode, after 00-03 complete |
-| `ci-validate.sh` | CI/CD integration | Automated validation in pipelines |
+| `scripts/pre-flight-check.sh` | Validate environment | Before starting workflow |
+| `scripts/discovery-pack-run.sh` | Full workflow executor | Automated end-to-end execution |
+| `scripts/validate.py` | Schema validation | After each artifact / end of workflow |
+| `scripts/extract_assumptions.py` | Generate 04 from 00-03 | Full mode, after 00-03 complete |
+| `scripts/ci-validate.sh` | CI/CD integration | Automated validation in pipelines |
 
 **Token Savings**: Automation provides ~30-40% token reduction vs manual execution.
 
@@ -245,7 +246,7 @@ python3 scripts/validate.py <output-dir>
 
 **Template loading fails**:
 - Check `templates/` directory exists relative to skill root
-- Verify path resolution working (run `pre-flight-check.sh`)
+- Verify path resolution working (run `scripts/pre-flight-check.sh`)
 
 ---
 
