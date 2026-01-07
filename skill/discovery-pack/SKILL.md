@@ -90,6 +90,13 @@ Generate 7 artifacts for enterprise, compliance-critical, security-sensitive pro
 
 ### Step 1: Determine Mode (MANDATORY)
 
+🛑 **STOP - Execute this BEFORE continuing:**
+
+Run pre-flight check:
+```bash
+bash ~/.copilot/skills/discovery-pack/pre-flight-check.sh <output-dir> <mode>
+```
+
 **ALWAYS ask this question first, before any artifact generation:**
 
 > **Discovery mode selection:**
@@ -103,6 +110,8 @@ If user says "just start" or doesn't respond: infer from project context:
 - Enterprise/finance/healthcare/security → full (with confirmation)
 
 **CRITICAL:** Never proceed to Step 2 without mode selection.
+
+✅ **Checkpoint:** Mode selected, pre-flight check passed
 
 ### Step 1.5: Check Automation Availability
 
@@ -141,20 +150,204 @@ All artifacts go into this timestamped directory.
 
 ### Step 3: Execute Discovery Sequence
 
-**For lite mode:**
-1. Invoke sub-skill `discovery-frame` → generates `00_problem-frame.md`
-2. Invoke sub-skill `discovery-options` → generates `03_option-space.md`
-3. Invoke sub-skill `discovery-handoff` → generates `07_speckit-handoff.md`
+🛑 **ENFORCEMENT: Two Execution Modes**
 
-**For full mode:**
-1. Invoke `discovery-frame` → `00_problem-frame.md`
-2. Invoke `discovery-constraints` → `01_constraints-nfr.md`
-3. Invoke `discovery-domain` → `02_domain-model.md`
-4. Invoke `discovery-options` → `03_option-space.md`
-5. Run `scripts/extract_assumptions.py` → `04_assumptions-unknowns.md` (or generate manually)
-6. Invoke `discovery-validate` → `05_validation-plan.md`
-7. Invoke `discovery-decide` → `06_decision-log.md`
-8. Invoke `discovery-handoff` → `07_speckit-handoff.md`
+**Mode A: Automated Executor (RECOMMENDED - Guaranteed Compliance)**
+```bash
+bash ~/.copilot/skills/discovery-pack/discovery-pack-run.sh <output-dir> <mode> "<project-name>"
+```
+- Enforces workflow with validation gates at each step
+- Shows sub-skill instructions before generation
+- Validates artifacts immediately after creation
+- Blocks progression if validation fails
+- **USE THIS to guarantee compliance**
+
+**Mode B: Manual with Inline Instructions (High Discipline Required)**
+Follow detailed sub-skill instructions below. Requires strict adherence to templates and validation.
+
+---
+
+#### Step 3.1: Problem Frame → `00_problem-frame.md`
+
+**Sub-Skill:** `discovery-frame` | **Template:** `templates/00_problem-frame.md`
+
+**Instructions:**
+1. **Read template** - Load YAML frontmatter structure + markdown sections
+2. **Fill sections:**
+   - Problem statement (what pain, who, why now)
+   - Users (primary/secondary with JTBD: "When I ___, I want to ___, so I can ___")
+   - Anti-goals (explicitly NOT solving)
+   - Success metrics (North Star + leading/lagging indicators)
+   - Context (market/technical/organizational/regulatory)
+3. **Apply tags** to every claim: `[FACT]`, `[ASSUMPTION]`, `[HYPOTHESIS]`, `[CONSTRAINT]`
+4. **Batch mode default:** Infer from context, mark as `[ASSUMPTION]`, no questions unless problem absent
+
+**Critical Requirements:**
+- YAML frontmatter MANDATORY (--- delimiters)
+- JTBD format: "When [situation], I want [action], so I can [outcome]"
+- North Star metric must be quantitative
+
+**Validation:** Must pass `validate.py` schema check
+
+---
+
+#### Step 3.2: Constraints & NFRs → `01_constraints-nfr.md` [FULL MODE ONLY]
+
+**Sub-Skill:** `discovery-constraints` | **Template:** `templates/01_constraints-nfr.md`
+
+**Instructions:**
+1. Document non-functional requirements:
+   - Security/Privacy (auth, encryption, threat model)
+   - Performance (latency SLAs, throughput, scalability)
+   - Compliance (GDPR, HIPAA, SOC2, etc.)
+   - Observability (logging, metrics, tracing)
+   - Operational (deployment, rollback, DR)
+2. Each constraint tagged `[CONSTRAINT]` or `[ASSUMPTION]` if uncertain
+
+**Output:** Structured NFR categories with measurable targets where possible
+
+---
+
+#### Step 3.3: Domain Model → `02_domain-model.md` [FULL MODE ONLY]
+
+**Sub-Skill:** `discovery-domain` | **Template:** `templates/02_domain-model.md`
+
+**Instructions:**
+1. Create DDD domain model:
+   - **Glossary:** Key terms + definitions (ubiquitous language)
+   - **Entities:** Core objects with identity (User, Order, Tool, etc.)
+   - **Events:** Domain events (UserRegistered, ToolScanned, etc.)
+   - **Bounded Contexts:** System boundaries
+   - **Relationships:** Entity connections
+2. Optional: Mermaid diagrams for entity-relationship visualization
+
+**Output:** Domain vocabulary + model that aligns team language
+
+---
+
+#### Step 3.4: Option Space → `03_option-space.md`
+
+**Sub-Skill:** `discovery-options` | **Template:** `templates/03_option-space.md`
+
+**Instructions:**
+1. Compare 2-4 alternative approaches
+2. For each option document:
+   - Description + architectural overview
+   - Pros/Cons
+   - Trade-off matrix (score on: complexity, cost, lock-in, team fit, risk)
+   - Risk analysis
+3. Weighted scoring → recommendation with rationale
+
+**🚨 CRITICAL GATE:**
+- If options tie in weighted score, **ASK user for tiebreaker criteria**
+- Do NOT proceed with arbitrary choice
+
+**Output:** Evidence-based recommendation with transparent trade-offs
+
+---
+
+#### Step 3.5: Extract Assumptions → `04_assumptions-unknowns.md` [FULL MODE ONLY]
+
+**Method:** Auto-generate OR manual extraction
+
+**Auto (if Python available):**
+```bash
+python3 scripts/extract_assumptions.py <output-dir>
+```
+Scans artifacts 00-03, extracts all `[ASSUMPTION]` and `[HYPOTHESIS]` tags into structured list.
+
+**Manual:** Copy-paste tagged assumptions from 00-03 into template structure.
+
+**Output:** Consolidated list of untested assumptions requiring validation
+
+---
+
+#### Step 3.6: Validation Plan → `05_validation-plan.md` [FULL MODE ONLY]
+
+**Sub-Skill:** `discovery-validate` | **Template:** `templates/05_validation-plan.md`
+
+**Instructions:**
+1. Read `04_assumptions-unknowns.md`
+2. For each critical assumption, design experiment:
+   - **Hypothesis:** Testable statement
+   - **Method:** Survey, prototype, A/B test, spike, etc.
+   - **Success Criteria:** Quantitative thresholds (proceed > X, pivot if Y, kill if < Z)
+   - **Timeline:** Duration + resource estimate
+3. Prioritize by (risk × impact)
+
+**🚨 CRITICAL GATE:**
+- If validation lacks quantitative success criteria, **ASK user for measurement definition**
+- Do NOT accept vague "we'll see if it works"
+
+**Output:** Testable hypotheses with clear proceed/pivot/kill thresholds
+
+---
+
+#### Step 3.7: Decision Log → `06_decision-log.md` [FULL MODE ONLY]
+
+**Sub-Skill:** `discovery-decide` | **Template:** `templates/06_decision-log.md`
+
+**Instructions:**
+1. Document decisions in ADR (Architecture Decision Record) format
+2. For each decision:
+   - **ID:** ADR-001, ADR-002, etc.
+   - **Title:** Short summary
+   - **Status:** Proposed | Accepted | Deprecated | Superseded
+   - **Context:** Why decision needed
+   - **Decision:** What was decided
+   - **Alternatives:** Options rejected + why
+   - **Consequences:** Positive and negative impacts
+3. Link related decisions (supersedes/superseded-by)
+
+**Output:** Auditable decision history with rationale
+
+---
+
+#### Step 3.8: Spec-Kit Handoff → `07_speckit-handoff.md`
+
+**Sub-Skill:** `discovery-handoff` | **Template:** `templates/07_speckit-handoff.md`
+
+**Instructions:**
+1. Transform discovery artifacts into spec-kit format
+2. Extract and structure:
+   - **Constitution Section:**
+     - Core principles (from 00_problem-frame)
+     - Constraints (from 01_constraints-nfr)
+     - Glossary (from 02_domain-model)
+   - **Specify Section:**
+     - Users + JTBD (from 00_problem-frame)
+     - Requirements (from 00 + 03_option-space chosen approach)
+     - Success metrics (from 00 + 05_validation-plan)
+     - Non-goals (from 00_problem-frame anti-goals)
+3. Format as **copy-paste ready** for `/speckit.constitution` and `/speckit.specify`
+
+**Output:** Ready-to-use spec-kit inputs
+
+---
+
+### Step 3 Validation Checkpoint (MANDATORY)
+
+After artifact generation, VALIDATE ALL:
+
+```bash
+python3 ~/.copilot/skills/discovery-pack/scripts/validate.py <output-dir>
+```
+
+**Expected output:**
+```
+✅ 00_problem-frame.md: Valid
+✅ 01_constraints-nfr.md: Valid
+✅ 02_domain-model.md: Valid
+...
+```
+
+**If validation fails:**
+1. Read error message (shows artifact + line + reason)
+2. Fix error in artifact
+3. Re-run validation
+4. Repeat until all ✅
+
+🛑 **DO NOT proceed without passing validation.**
 
 ### Step 4: Apply Tag System
 
