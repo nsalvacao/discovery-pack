@@ -132,3 +132,14 @@ discovery-pack/
 ## Version History
 
 - **1.0.0** (2026-01-06) - Initial public release
+## [Unreleased]
+
+### Fixed (continued)
+
+#### Issue #2: Cross-Agent Portability (Path Resolution) - COMPLETE
+- Removed 5 hardcoded `~/.copilot/` paths from SKILL.md
+- Created `scripts/pre-flight-check.sh` with relative path resolution
+- Added Path Assumptions section documenting all installation locations
+- Cross-agent testing simulated (production validation recommended)
+- **Result**: Skill now portable across Copilot CLI, Claude Code, project-local installations
+

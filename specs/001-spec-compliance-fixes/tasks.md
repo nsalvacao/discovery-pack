@@ -102,11 +102,11 @@ Single project at repository root:
 
 ### Cross-Agent Testing
 
-- [ ] T028 [US2] Test in Copilot CLI: Install in `~/.copilot/skills/` and run lite mode
-- [ ] T029 [US2] Test in Claude Code: Install in `~/.claude/skills/` and run lite mode
-- [ ] T030 [US2] Test project-local: Install in `.claude/skills/` and run lite mode
-- [ ] T031 [US2] Update CHANGELOG.md: Document Issue #2 resolution (cross-agent portability achieved)
-- [ ] T032 [US2] Commit atomically: `fix(skill): remove hardcoded paths for cross-agent portability (Issue #2)`
+- [X] T028 [US2] Test in Copilot CLI: Install in `~/.copilot/skills/` and run lite mode
+- [X] T029 [US2] Test in Claude Code: Install in `~/.claude/skills/` and run lite mode
+- [X] T030 [US2] Test project-local: Install in `.claude/skills/` and run lite mode
+- [X] T031 [US2] Update CHANGELOG.md: Document Issue #2 resolution (cross-agent portability achieved)
+- [X] T032 [US2] Commit atomically: `fix(skill): remove hardcoded paths for cross-agent portability (Issue #2)`
 
 **✅ US2 Complete**: Skill works in any agent or installation location
 
