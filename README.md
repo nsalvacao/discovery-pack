@@ -185,7 +185,7 @@ We are building the standard for Agentic Governance.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for code of conduct and development standards.
 
 ---
-**Spec-Kit Integration**: Use `07_speckit-handoff.md` output with [GitHub Spec-Kit](https://github.com/github/spec-kit)
-**Methodologies**: See `shared-references/methodologies.md` for detailed guidance
-**Maintained by:** [nsalvacao](https://github.com/nsalvacao)
-**License:** [MIT](LICENSE)
+- **Spec-Kit Integration**: Use `07_speckit-handoff.md` output with [GitHub Spec-Kit](https://github.com/github/spec-kit)
+- **Methodologies**: See `shared-references/methodologies.md` for detailed guidance
+- **Maintained by:** [nsalvacao](https://github.com/nsalvacao)
+- **License:** [MIT](LICENSE)
