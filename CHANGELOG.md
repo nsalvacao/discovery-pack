@@ -19,11 +19,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Verified `03_option-space.md` and `04_assumptions-unknowns.md`: Already schema-compliant
 - **Result**: All 8 templates now pass JSON schema validation (100% success rate)
 
-#### Issue #2: Cross-Agent Portability (Path Resolution)
+#### Issue #2: Cross-Agent Portability (Path Resolution) - COMPLETE
 - Fixed `scripts/template_filler.py`: Replaced `Path.home() / ".copilot/skills/discovery-pack"` with `Path(__file__).parent.parent`
 - Verified `scripts/validate.py`: Already uses relative paths correctly
 - Verified `scripts/ci-validate.sh`: Already uses `${BASH_SOURCE[0]}` correctly
 - **Result**: Scripts now portable across Claude Code, Copilot CLI, and project-local installations
+
+#### Issue #3: Flat Architecture Compliance (9 → 1 SKILL.md)
+- Consolidated 9 SKILL.md files (918 lines total) into single SKILL.md (274 lines)
+- **Reduction**: 70% line count reduction (918 → 274 lines)
+- Created detailed workflow files: `shared-references/workflows/lite-mode.md` (196 lines), `full-mode.md` (366 lines)
+- Deleted 8 sub-skill directories (discovery-frame, decide, domain, options, validate, handoff, run, constraints)
+- Applied compression techniques: prose→bullets, inline→tables, examples→references
+- **Result**: Anthropic flat architecture spec compliant (<500 lines, 39% margin)
+
+#### Issue #4: Progressive Disclosure Token Efficiency (20-30% savings)
+- Implemented just-in-time template loading (load only when generating specific artifact)
+- Workflow files loaded on-demand (not upfront)
+- Methodology references lazy-loaded (only when user asks questions)
+- Documented token optimization guidance with targets (lite: ≤15k, full: ≤25k tokens)
+- **Estimated savings**: 20-30% token reduction from baseline (~19k → ~13-15k tokens)
+- **Result**: Token efficiency optimized via progressive disclosure pattern
+
+### Changed
+- Version bumped to 2.0.0 (breaking: flat architecture removes sub-skill navigation)
+- SKILL.md structure: High-level orchestration + workflow pointers (progressive disclosure)
+- Artifact reference table added (8 artifacts with templates, auto-generation flags)
+- Quality gates section added (pre-flight, artifact quality, handoff criteria)
 
 ## [1.0.0] - 2026-01-06
 

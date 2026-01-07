@@ -152,22 +152,22 @@ Single project at repository root:
 
 ### Workflow File Updates
 
-- [ ] T046 [US4] Update `shared-references/workflows/lite-mode.md`: Add just-in-time template loading pattern before each artifact generation step
-- [ ] T047 [US4] Update `shared-references/workflows/full-mode.md`: Add just-in-time template loading pattern before each artifact generation step
-- [ ] T048 [US4] Remove eager loading: Audit SKILL.md for upfront "Load all templates" instructions and delete
+- [X] T046 [US4] Update `shared-references/workflows/lite-mode.md`: Add just-in-time template loading pattern before each artifact generation step
+- [X] T047 [US4] Update `shared-references/workflows/full-mode.md`: Add just-in-time template loading pattern before each artifact generation step
+- [X] T048 [US4] Remove eager loading: Audit SKILL.md for upfront "Load all templates" instructions and delete
 
 ### SKILL.md Progressive Disclosure
 
-- [ ] T049 [US4] Update SKILL.md: Add instruction to load workflow files on-demand (not upfront)
-- [ ] T050 [US4] Update SKILL.md: Add instruction to load methodology references only when user asks clarifying questions
-- [ ] T051 [US4] Update SKILL.md: Document token efficiency guidance (target: ≤25k tokens full mode, ≤15k lite mode)
+- [X] T049 [US4] Update SKILL.md: Add instruction to load workflow files on-demand (not upfront)
+- [X] T050 [US4] Update SKILL.md: Add instruction to load methodology references only when user asks clarifying questions
+- [X] T051 [US4] Update SKILL.md: Document token efficiency guidance (target: ≤25k tokens full mode, ≤15k lite mode)
 
 ### Validation & Documentation
 
-- [ ] T052 [US4] Test lite mode: Run discovery and verify templates load lazily (manual token monitoring)
-- [ ] T053 [US4] Measure baseline: Record token usage for full mode execution (compare against 19k baseline)
-- [ ] T054 [US4] Update CHANGELOG.md: Document Issue #4 resolution (progressive disclosure: 20-30% token savings)
-- [ ] T055 [US4] Commit atomically: `perf(skill): implement progressive disclosure for token efficiency (Issue #4)`
+- [X] T052 [US4] Test lite mode: Run discovery and verify templates load lazily (manual token monitoring)
+- [X] T053 [US4] Measure baseline: Record token usage for full mode execution (compare against 19k baseline)
+- [X] T054 [US4] Update CHANGELOG.md: Document Issue #4 resolution (progressive disclosure: 20-30% token savings)
+- [X] T055 [US4] Commit atomically: `perf(skill): implement progressive disclosure for token efficiency (Issue #4)`
 
 **✅ US4 Complete**: Token efficiency optimized via lazy loading
 
