@@ -63,14 +63,14 @@ Single project at repository root:
 
 ### Template Fixes (Based on research.md R1 audit matrix)
 
-- [ ] T011 [P] [US1] Fix `templates/00_problem-frame.md`: Add missing YAML fields per schema (business_impact, success_criteria_preview, initial_unknowns)
-- [ ] T012 [P] [US1] Fix `templates/01_constraints-nfr.md`: Convert incompatible structures to match schema arrays/objects
-- [ ] T013 [P] [US1] Fix `templates/02_domain-model.md`: Add required 'name' field to domain entity structure
-- [ ] T014 [P] [US1] Fix `templates/03_option-space.md`: Update vendor_lock_in enum values to ["low", "medium", "high"] (remove "none")
-- [ ] T015 [P] [US1] Fix `templates/04_assumptions-unknowns.md`: Validate structure matches schema (may already be valid)
-- [ ] T016 [P] [US1] Fix `templates/05_validation-plan.md`: Add missing exit_criteria field to YAML frontmatter
-- [ ] T017 [P] [US1] Fix `templates/06_decision-log.md`: Fix superseded_by field nullable constraint per schema
-- [ ] T018 [P] [US1] Fix `templates/07_speckit-handoff.md`: Add missing glossary field to YAML frontmatter
+- [X] T011 [P] [US1] Fix `templates/00_problem-frame.md`: Add missing YAML fields per schema (business_impact, success_criteria_preview, initial_unknowns)
+- [X] T012 [P] [US1] Fix `templates/01_constraints-nfr.md`: Convert incompatible structures to match schema arrays/objects
+- [X] T013 [P] [US1] Fix `templates/02_domain-model.md`: Add required 'name' field to domain entity structure
+- [X] T014 [P] [US1] Fix `templates/03_option-space.md`: Update vendor_lock_in enum values to ["low", "medium", "high"] (remove "none")
+- [X] T015 [P] [US1] Fix `templates/04_assumptions-unknowns.md`: Validate structure matches schema (may already be valid)
+- [X] T016 [P] [US1] Fix `templates/05_validation-plan.md`: Add missing exit_criteria field to YAML frontmatter
+- [X] T017 [P] [US1] Fix `templates/06_decision-log.md`: Fix superseded_by field nullable constraint per schema
+- [X] T018 [P] [US1] Fix `templates/07_speckit-handoff.md`: Add missing glossary field to YAML frontmatter
 
 ### Validation & Documentation
 

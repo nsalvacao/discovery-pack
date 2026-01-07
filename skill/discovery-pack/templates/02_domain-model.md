@@ -49,8 +49,8 @@ events:
       - "[What happens after]"
 
 bounded_contexts:
-  - context: "[Context Name]"
-    description: "[What domain area this covers]"
+  - name: "[Context Name]"
+    responsibility: "[What domain area this covers]"
     entities:
       - "[Entity 1]"
       - "[Entity 2]"

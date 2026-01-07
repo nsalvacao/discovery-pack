@@ -21,6 +21,9 @@ constitution_input:
   guardrails:
     - guardrail: "[Anti-pattern to avoid]"
       rationale: "[Why avoid]"
+  glossary:
+    - term: "[Term 1]"
+      definition: "[Definition]"
 
 specify_input:
   users:
