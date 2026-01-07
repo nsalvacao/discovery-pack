@@ -37,4 +37,6 @@ tmp/
 !.specify/memory/.gitkeep
 /.claude
 /.specify
-/specs
+/specs/*
+specs/*
+
