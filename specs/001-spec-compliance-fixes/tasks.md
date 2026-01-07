@@ -177,14 +177,14 @@ Single project at repository root:
 
 **Purpose**: Final validation, documentation, and quality gates
 
-- [ ] T056 Run full compliance validation: Check constitution.md Principles I-IV all pass
-- [ ] T057 [P] Update README.md: Add "Spec Compliance" badge and validation instructions
-- [ ] T058 [P] Update INSTALLATION.md: Document cross-agent installation (Copilot CLI, Claude Code, project-local)
-- [ ] T059 [P] Create quickstart guide: `specs/001-spec-compliance-fixes/quickstart.md` (developer onboarding)
-- [ ] T060 Run end-to-end test: Execute full mode in production-like environment
-- [ ] T061 Verify all success criteria from spec.md: 12.5%→100% validation, 549→<450 lines, 19k→≤25k tokens, 3→3 agent compatibility
-- [ ] T062 Final commit: `docs: update compliance artifacts and close Issues #1-4`
-- [ ] T063 Merge to main: Create PR with spec.md, plan.md, research.md, tasks.md links
+- [X] T056 Run full compliance validation: Check constitution.md Principles I-IV all pass
+- [X] T057 [P] Update README.md: Add "Spec Compliance" badge and validation instructions
+- [X] T058 [P] Update INSTALLATION.md: Document cross-agent installation (Copilot CLI, Claude Code, project-local)
+- [X] T059 [P] Create quickstart guide: `specs/001-spec-compliance-fixes/quickstart.md` (developer onboarding)
+- [X] T060 Run end-to-end test: Execute full mode in production-like environment
+- [X] T061 Verify all success criteria from spec.md: 12.5%→100% validation, 549→<450 lines, 19k→≤25k tokens, 3→3 agent compatibility
+- [X] T062 Final commit: `docs: update compliance artifacts and close Issues #1-4`
+- [X] T063 Merge to main: Create PR with spec.md, plan.md, research.md, tasks.md links
 
 **✅ Project Complete**: 100% Anthropic Skills Spec compliance achieved
 
