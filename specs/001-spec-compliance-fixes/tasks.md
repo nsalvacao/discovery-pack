@@ -76,7 +76,7 @@ Single project at repository root:
 
 - [X] T019 [US1] Run validation: `python skill/discovery-pack/scripts/validate.py` → expect 8/8 pass
 - [X] T020 [US1] Update CHANGELOG.md: Document Issue #1 resolution (schema-template sync 12.5%→100%)
-- [ ] T021 [US1] Commit atomically: `fix(templates): synchronize 7 templates with JSON schemas (Issue #1)`
+- [X] T021 [US1] Commit atomically: `fix(templates): synchronize 7 templates with JSON schemas (Issue #1)`
 
 **✅ US1 Complete**: All artifacts pass schema validation
 
@@ -90,15 +90,15 @@ Single project at repository root:
 
 ### SKILL.md Path Fixes
 
-- [ ] T022 [US2] Audit SKILL.md: `grep -n "~/.copilot" skill/discovery-pack/SKILL.md` to identify hardcoded paths
-- [ ] T023 [US2] Replace hardcoded paths with relative references: `skill/discovery-pack/templates/`, `skill/discovery-pack/schemas/`, `skill/discovery-pack/scripts/`
-- [ ] T024 [US2] Update script invocation examples in SKILL.md to use relative paths (e.g., `python scripts/validate.py` not `~/.copilot/.../validate.py`)
-- [ ] T025 [US2] Add path assumptions section to SKILL.md: Document skill root as working directory convention
+- [X] T022 [US2] Audit SKILL.md: `grep -n "~/.copilot" skill/discovery-pack/SKILL.md` to identify hardcoded paths
+- [X] T023 [US2] Replace hardcoded paths with relative references: `skill/discovery-pack/templates/`, `skill/discovery-pack/schemas/`, `skill/discovery-pack/scripts/`
+- [X] T024 [US2] Update script invocation examples in SKILL.md to use relative paths (e.g., `python scripts/validate.py` not `~/.copilot/.../validate.py`)
+- [X] T025 [US2] Add path assumptions section to SKILL.md: Document skill root as working directory convention
 
 ### Pre-Flight Check Script
 
-- [ ] T026 [US2] Create `scripts/pre-flight-check.sh`: Verify templates/, schemas/, scripts/ dirs exist relative to skill root *(Note: Runtime check for end users. See T001 for development environment validation.)*
-- [ ] T027 [US2] Add usage instructions for pre-flight check in SKILL.md
+- [X] T026 [US2] Create `scripts/pre-flight-check.sh`: Verify templates/, schemas/, scripts/ dirs exist relative to skill root *(Note: Runtime check for end users. See T001 for development environment validation.)*
+- [X] T027 [US2] Add usage instructions for pre-flight check in SKILL.md
 
 ### Cross-Agent Testing
 

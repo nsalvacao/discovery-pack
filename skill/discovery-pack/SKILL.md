@@ -26,6 +26,28 @@ This skill package guides structured project discovery using proven methodologie
 See `shared-references/methodologies.md` for methodology details.
 See `shared-references/glossary.md` for terminology.
 
+## Path Assumptions
+
+**Working Directory Convention**: All script paths in this skill are relative to the skill root directory. When invoking scripts, ensure you are either:
+1. Running from the skill root directory (e.g., `~/.copilot/skills/discovery-pack/` or `~/.claude/skills/discovery-pack/`)
+2. Using full paths if running from elsewhere
+
+**Installation Locations Supported**:
+- `~/.copilot/skills/discovery-pack/` (GitHub Copilot CLI)
+- `~/.claude/skills/discovery-pack/` (Claude Code)
+- `.claude/skills/discovery-pack/` (project-local installation)
+- Any custom location - scripts use relative path resolution
+
+**Script Invocation Examples**:
+```bash
+# From skill root directory:
+bash scripts/pre-flight-check.sh <output-dir> <mode>
+python3 scripts/validate.py <output-dir>
+
+# From any directory (use full path):
+bash ~/.copilot/skills/discovery-pack/scripts/pre-flight-check.sh <output-dir> <mode>
+```
+
 ## When to Activate
 
 Activate this skill when the user:
@@ -94,7 +116,7 @@ Generate 7 artifacts for enterprise, compliance-critical, security-sensitive pro
 
 Run pre-flight check:
 ```bash
-bash ~/.copilot/skills/discovery-pack/pre-flight-check.sh <output-dir> <mode>
+bash scripts/pre-flight-check.sh <output-dir> <mode>
 ```
 
 **ALWAYS ask this question first, before any artifact generation:**
@@ -128,7 +150,7 @@ python3 -c "import jsonschema, yaml; print('✅ Automation available')" 2>&1
 
 **If automation unavailable:**
 - Proceed manually (current behavior)
-- Optionally suggest: `pip install -r ~/.copilot/skills/discovery-pack/scripts/requirements.txt`
+- Optionally suggest: `pip install -r scripts/requirements.txt`
 
 ### Step 2: Determine Output Directory
 
@@ -154,7 +176,7 @@ All artifacts go into this timestamped directory.
 
 **Mode A: Automated Executor (RECOMMENDED - Guaranteed Compliance)**
 ```bash
-bash ~/.copilot/skills/discovery-pack/discovery-pack-run.sh <output-dir> <mode> "<project-name>"
+bash discovery-pack-run.sh <output-dir> <mode> "<project-name>"
 ```
 - Enforces workflow with validation gates at each step
 - Shows sub-skill instructions before generation
@@ -330,7 +352,7 @@ Scans artifacts 00-03, extracts all `[ASSUMPTION]` and `[HYPOTHESIS]` tags into 
 After artifact generation, VALIDATE ALL:
 
 ```bash
-python3 ~/.copilot/skills/discovery-pack/scripts/validate.py <output-dir>
+python3 scripts/validate.py <output-dir>
 ```
 
 **Expected output:**
@@ -397,7 +419,7 @@ For all other unknowns, make reasonable assumptions and tag them.
 
 **If automation available:**
 ```bash
-python3 ~/.copilot/skills/discovery-pack/scripts/validate.py <output-dir>
+python3 scripts/validate.py <output-dir>
 ```
 
 **If validation fails:**
