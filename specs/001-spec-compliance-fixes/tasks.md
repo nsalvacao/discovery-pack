@@ -136,9 +136,9 @@ Single project at repository root:
 
 - [X] T041 [US3] Verify line count: `wc -l skill/discovery-pack/SKILL.md` (target: 400-450 lines)
 - [X] T042 [US3] Verify single file: `find skill/discovery-pack -name SKILL.md | wc -l` outputs 1
-- [ ] T043 [US3] Test lite mode: Run discovery-run to ensure workflow file references load correctly
-- [ ] T044 [US3] Update CHANGELOG.md: Document Issue #3 resolution (flat architecture: 9→1 SKILL.md, 1445→<450 lines)
-- [ ] T045 [US3] Commit atomically: `refactor(skill): consolidate to flat architecture <450 lines (Issue #3)`
+- [X] T043 [US3] Test lite mode: Run discovery-run to ensure workflow file references load correctly
+- [X] T044 [US3] Update CHANGELOG.md: Document Issue #3 resolution (flat architecture: 9→1 SKILL.md, 1445→<450 lines)
+- [X] T045 [US3] Commit atomically: `refactor(skill): consolidate to flat architecture <450 lines (Issue #3)`
 
 **✅ US3 Complete**: Anthropic flat architecture spec compliance achieved
 
